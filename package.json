@@ -1,0 +1,13 @@
+{
+  "name": "subtitle-codex-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local Japanese-to-Chinese SRT translator powered by an authenticated Codex CLI.",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

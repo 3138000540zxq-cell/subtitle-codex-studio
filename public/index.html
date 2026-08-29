@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Codex 字幕翻译台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">LOCAL CODEX WORKFLOW</p>
+        <h1>字幕翻译台</h1>
+      </div>
+      <div class="runtime-status" id="runtimeStatus" aria-live="polite">
+        <span class="status-dot"></span>
+        <span>正在检查 Codex Skill</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="workspace" aria-label="字幕翻译工作区">
+        <div class="source-pane">
+          <div class="section-heading">
+            <div>
+              <span class="step-number">01</span>
+              <h2>日文字幕</h2>
+            </div>
+            <span class="file-meta" id="fileMeta">尚未选择文件</span>
+          </div>
+
+          <label class="drop-zone" id="dropZone" for="fileInput">
+            <input id="fileInput" type="file" accept=".srt,application/x-subrip,text/plain" />
+            <span class="drop-symbol" aria-hidden="true">↑</span>
+            <strong>拖入日文 SRT</strong>
+            <span>或点击选择文件</span>
+          </label>
+
+          <div class="preview-shell">
+            <div class="preview-toolbar">
+              <span>源字幕预览</span>
+              <span id="cueCount">0 条</span>
+            </div>
+            <pre id="sourcePreview">选择文件后在这里检查字幕内容。</pre>
+          </div>
+        </div>
+
+        <aside class="control-pane">
+          <div class="section-heading compact">
+            <div>
+              <span class="step-number">02</span>
+              <h2>翻译设置</h2>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>断句模式</legend>
+            <div class="segmented-control">
+              <label>
+                <input type="radio" name="segmentation" value="smart" checked />
+                <span>智能断句</span>
+              </label>
+              <label>
+                <input type="radio" name="segmentation" value="strict" />
+                <span>严格时间轴</span>
+              </label>
+            </div>
+            <p class="field-note" id="segmentationNote">按标点合并或拆分，更适合直接观看。</p>
+          </fieldset>
+
+          <fieldset>
+            <legend>输出文件</legend>
+            <div class="option-list">
+              <label>
+                <input type="radio" name="outputKind" value="both" checked />
+                <span><strong>两个版本</strong><small>纯中文 + 日中双语</small></span>
+              </label>
+              <label>
+                <input type="radio" name="outputKind" value="target" />
+                <span><strong>纯中文字幕</strong><small>适合播放器字幕轨</small></span>
+              </label>
+              <label>
+                <input type="radio" name="outputKind" value="bilingual" />
+                <span><strong>日中双语</strong><small>日文在上，中文在下</small></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <label class="text-field">
+            <span>风格补充 <small>可选</small></span>
+            <textarea id="styleNotes" maxlength="500" rows="3" placeholder="例如：综艺口吻自然一些，人名保留日文写法"></textarea>
+          </label>
+
+          <button class="primary-action" id="translateButton" type="button" disabled>
+            <span id="buttonLabel">调用 Codex 翻译</span>
+            <span aria-hidden="true">→</span>
+          </button>
+
+          <div class="privacy-note">
+            <strong>本地运行</strong>
+            <span>视频不会上传；仅字幕文字交给已登录的 Codex 处理。</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="results-band" id="resultsBand" hidden>
+        <div class="section-heading">
+          <div>
+            <span class="step-number success">03</span>
+            <h2>翻译完成</h2>
+          </div>
+          <span class="validation-copy" id="validationCopy"></span>
+        </div>
+        <div class="result-list" id="resultList"></div>
+      </section>
+
+      <section class="error-band" id="errorBand" hidden role="alert">
+        <strong>翻译没有完成</strong>
+        <p id="errorMessage"></p>
+      </section>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>
